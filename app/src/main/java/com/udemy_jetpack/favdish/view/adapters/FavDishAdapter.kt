@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -39,6 +40,9 @@ class FavDishAdapter(private val fragment: Fragment) :
             .load(dish.image)
             .into(holder.ivDishImage)
         holder.tvTitle.text = dish.title
+
+        holder.itemView.animation =
+            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.animation_one)
 
         holder.itemView.setOnClickListener {
             if (fragment is AllDishesFragment) {

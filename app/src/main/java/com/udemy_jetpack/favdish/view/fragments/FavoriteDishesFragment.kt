@@ -8,8 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.transition.TransitionInflater
-import com.google.android.material.transition.platform.MaterialFadeThrough
 import com.udemy_jetpack.favdish.R
 import com.udemy_jetpack.favdish.application.FavDishApplication
 import com.udemy_jetpack.favdish.databinding.FragmentFavoriteDishesBinding
@@ -41,6 +39,9 @@ class FavoriteDishesFragment : Fragment() {
 
         requireActivity().window.statusBarColor = resources.getColor(R.color.primaryDarkColor)
         requireActivity().window.navigationBarColor = resources.getColor(R.color.primaryColor)
+        if (requireActivity() is MainActivity) {
+            (activity as MainActivity?)?.changeActionBarColor(resources.getColor(R.color.primaryColor))
+        }
 
         mFavDishViewModel.favoriteDishes.observe(viewLifecycleOwner) { dishes ->
             dishes.let {

@@ -66,6 +66,7 @@ object Animations {
         )
         animator.repeatCount = 1
         animator.repeatMode = ObjectAnimator.REVERSE
+        animator.duration = 150
         animator.disableViewDuringAnimation(view)
         animator.start()
     }

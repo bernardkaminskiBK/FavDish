@@ -36,6 +36,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_random_dishes
             )
         )
+
+        setSupportActionBar(mBinding.toolbar)
+
         setupActionBarWithNavController(mNavController, appBarConfiguration)
         mBinding.navView.setupWithNavController(mNavController)
 
@@ -49,6 +52,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return NavigationUI.navigateUp(mNavController, null)
+    }
+
+    fun changeActionBarColor(color: Int) {
+        mBinding.toolbar.setBackgroundColor(color)
+    }
+
+    fun changeActionBarTitle(title: String) {
+        mBinding.toolbar.title = title
     }
 
     fun hideBottomNavigationView() {

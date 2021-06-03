@@ -3,8 +3,10 @@ package com.udemy_jetpack.favdish.view.fragments
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -22,6 +24,7 @@ import com.udemy_jetpack.favdish.view.adapters.CustomListItemAdapter
 import com.udemy_jetpack.favdish.view.adapters.FavDishAdapter
 import com.udemy_jetpack.favdish.viewmodel.FavDishViewModel
 import com.udemy_jetpack.favdish.viewmodel.FavDishViewModelFactory
+import java.util.*
 
 class AllDishesFragment : Fragment() {
 
@@ -50,9 +53,7 @@ class AllDishesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        requireActivity().window.statusBarColor = resources.getColor(R.color.primaryDarkColor)
-        requireActivity().window.navigationBarColor = resources.getColor(R.color.primaryColor)
+        setThemeColor()
 
         mFavDishViewModel.allDishesList.observe(viewLifecycleOwner) { dishes ->
             dishes.let {
@@ -68,8 +69,24 @@ class AllDishesFragment : Fragment() {
                 } else {
                     mBinding.rvDishesList.visibility = View.GONE
                     mBinding.tvNoDishesAddedYet.visibility = View.VISIBLE
+                    mBinding.tvNoDishesAddedYet.text = getString(R.string.list_of_dish_empty)
                 }
             }
+        }
+    }
+
+    private fun setThemeColor() {
+        requireActivity().window.statusBarColor =
+            ContextCompat.getColor(requireContext(), R.color.primaryDarkColor)
+        requireActivity().window.navigationBarColor =
+            ContextCompat.getColor(requireContext(), R.color.primaryColor)
+        if (requireActivity() is MainActivity) {
+            (activity as MainActivity?)?.changeActionBarColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.primaryColor
+                )
+            )
         }
     }
 
@@ -121,6 +138,9 @@ class AllDishesFragment : Fragment() {
                 dishTypes,
                 Constants.FILTER_SELECTION
             )
+
+        println("Filter selection: ${Constants.FILTER_SELECTION}")
+
         binding.rvList.adapter = adapter
         mCustomListDialog.show()
     }
@@ -154,6 +174,10 @@ class AllDishesFragment : Fragment() {
     fun filterSelection(filterItemSelection: String) {
         mCustomListDialog.dismiss()
 
+        if (requireActivity() is MainActivity) {
+            (activity as MainActivity?)?.changeActionBarTitle(filterItemSelection.capitalize(Locale.ROOT))
+        }
+
         if (filterItemSelection == Constants.ALL_ITEMS) {
             mFavDishViewModel.allDishesList.observe(viewLifecycleOwner) { dishes ->
                 dishes.let {
@@ -165,6 +189,7 @@ class AllDishesFragment : Fragment() {
                     } else {
                         mBinding.rvDishesList.visibility = View.GONE
                         mBinding.tvNoDishesAddedYet.visibility = View.VISIBLE
+                        mBinding.tvNoDishesAddedYet.text = getString(R.string.list_of_dish_empty)
                     }
                 }
             }
@@ -179,6 +204,8 @@ class AllDishesFragment : Fragment() {
                         } else {
                             mBinding.rvDishesList.visibility = View.GONE
                             mBinding.tvNoDishesAddedYet.visibility = View.VISIBLE
+                            mBinding.tvNoDishesAddedYet.text =
+                                getString(R.string.label_no_dishes_added_yet, filterItemSelection)
                         }
                     }
                 }

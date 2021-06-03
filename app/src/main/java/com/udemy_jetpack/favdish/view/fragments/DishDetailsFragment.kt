@@ -25,6 +25,7 @@ import com.udemy_jetpack.favdish.databinding.FragmentDishDetailsBinding
 import com.udemy_jetpack.favdish.model.entities.FavDish
 import com.udemy_jetpack.favdish.utils.Animations
 import com.udemy_jetpack.favdish.utils.Constants
+import com.udemy_jetpack.favdish.view.activities.MainActivity
 import com.udemy_jetpack.favdish.viewmodel.FavDishViewModel
 import com.udemy_jetpack.favdish.viewmodel.FavDishViewModelFactory
 import java.io.IOException
@@ -136,10 +137,14 @@ class DishDetailsFragment : Fragment() {
                                 Palette.from(resource.toBitmap())
                                     .generate { palette ->
                                         val intColor = palette?.vibrantSwatch?.rgb ?: 0
-                                        println("int color $intColor")
-                                        mBinding!!.rlDishDetailMain.setBackgroundColor(intColor)
-                                        requireActivity().window.navigationBarColor = intColor
-//                                        requireActivity().window.statusBarColor = intColor
+                                        if(intColor != 0){
+                                            mBinding!!.rlDishDetailMain.setBackgroundColor(intColor)
+                                            requireActivity().window.navigationBarColor = intColor
+                                            requireActivity().window.statusBarColor = intColor
+                                            if(requireActivity() is MainActivity){
+                                                (activity as MainActivity?)?.changeActionBarColor(intColor)
+                                            }
+                                        }
                                     }
                             }
                             return false
@@ -176,7 +181,7 @@ class DishDetailsFragment : Fragment() {
                 setIvFavoriteDishImage(R.drawable.ic_favorite_unselected)
         }
 
-        mBinding!!.ivDishImage.setOnClickListener {
+        mBinding!!.ivFavoriteDish.setOnClickListener {
 
             args.dishDetails.favoriteDish = !args.dishDetails.favoriteDish
 
