@@ -18,4 +18,12 @@
         app:showAsAction="always"
         />
 
+    <item
+        android:id="@+id/action_theme_setting"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/setting_theme"
+        android:orderInCategory="102"
+        app:showAsAction="always"
+        />
+
 </menu>

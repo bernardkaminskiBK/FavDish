@@ -3,10 +3,8 @@ package com.udemy_jetpack.favdish.view.fragments
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.*
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -33,6 +31,8 @@ class AllDishesFragment : Fragment() {
     private lateinit var mFavDishAdapter: FavDishAdapter
     private lateinit var mCustomListDialog: Dialog
 
+    private var actionAddDishMenuItem: MenuItem? = null
+
     private val mFavDishViewModel: FavDishViewModel by viewModels {
         FavDishViewModelFactory((requireActivity().application as FavDishApplication).repository)
     }
@@ -53,7 +53,7 @@ class AllDishesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setThemeColor()
+
 
         mFavDishViewModel.allDishesList.observe(viewLifecycleOwner) { dishes ->
             dishes.let {
@@ -72,21 +72,6 @@ class AllDishesFragment : Fragment() {
                     mBinding.tvNoDishesAddedYet.text = getString(R.string.list_of_dish_empty)
                 }
             }
-        }
-    }
-
-    private fun setThemeColor() {
-        requireActivity().window.statusBarColor =
-            ContextCompat.getColor(requireContext(), R.color.primaryDarkColor)
-        requireActivity().window.navigationBarColor =
-            ContextCompat.getColor(requireContext(), R.color.primaryColor)
-        if (requireActivity() is MainActivity) {
-            (activity as MainActivity?)?.changeActionBarColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.primaryColor
-                )
-            )
         }
     }
 
@@ -139,8 +124,6 @@ class AllDishesFragment : Fragment() {
                 Constants.FILTER_SELECTION
             )
 
-        println("Filter selection: ${Constants.FILTER_SELECTION}")
-
         binding.rvList.adapter = adapter
         mCustomListDialog.show()
     }
@@ -149,6 +132,9 @@ class AllDishesFragment : Fragment() {
         super.onResume()
         if (requireActivity() is MainActivity) {
             (activity as MainActivity?)?.showBottomNavigationView()
+        }
+        actionAddDishMenuItem?.let {
+            it.isEnabled = true
         }
     }
 
@@ -160,15 +146,37 @@ class AllDishesFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_add_dish -> {
+                actionAddDishMenuItem = item
+                actionAddDishMenuItem?.isEnabled = false
                 startActivity(Intent(requireActivity(), AddUpdateDishActivity::class.java))
                 return true
             }
             R.id.action_filter_dishes -> {
+                if (requireActivity() is MainActivity) {
+                    (activity as MainActivity?)?.closeAppSetting()
+                }
                 filterDishesListDialog()
+                return true
+            }
+            //TODO: 1. I have added an icon and I need to figure out the logic of how to implement
+            // the setting window where the user will be able to change the color of the app theme, yeah
+            // I know it is a nice thought. :-)
+            R.id.action_theme_setting -> {
+                if (requireActivity() is MainActivity) {
+                    (activity as MainActivity?)?.appSettings()
+                }
+                mBinding.fragmentAllDishes.alpha = 0.30f
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (requireActivity() is MainActivity) {
+            (activity as MainActivity?)?.closeAppSetting()
+        }
     }
 
     fun filterSelection(filterItemSelection: String) {

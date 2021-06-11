@@ -37,7 +37,7 @@
         android:id="@+id/navigation_random_dishes"
         android:name="com.udemy_jetpack.favdish.view.fragments.RandomDishFragment"
         android:label="@string/title_random_dishes"
-        tools:layout="@layout/fragment_random_dish" />
+        tools:layout="@layout/fragment_random_dish"/>
 
     <fragment
         android:id="@+id/navigation_dish_details"

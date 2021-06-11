@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.udemy_jetpack.favdish.R
 import com.udemy_jetpack.favdish.application.FavDishApplication
 import com.udemy_jetpack.favdish.databinding.FragmentFavoriteDishesBinding
 import com.udemy_jetpack.favdish.model.entities.FavDish
@@ -37,18 +36,21 @@ class FavoriteDishesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().window.statusBarColor = resources.getColor(R.color.primaryDarkColor)
-        requireActivity().window.navigationBarColor = resources.getColor(R.color.primaryColor)
-        if (requireActivity() is MainActivity) {
-            (activity as MainActivity?)?.changeActionBarColor(resources.getColor(R.color.primaryColor))
-        }
+//        requireActivity().window.statusBarColor = resources.getColor(R.color.primaryDarkColor)
+//        requireActivity().window.navigationBarColor = resources.getColor(R.color.primaryColor)
+//        if (requireActivity() is MainActivity) {
+//            (activity as MainActivity?)?.changeActionBarColor(resources.getColor(R.color.primaryColor))
+//        }
 
         mFavDishViewModel.favoriteDishes.observe(viewLifecycleOwner) { dishes ->
             dishes.let {
 
                 mBinding!!.recyclerViewFavDishes.layoutManager =
                     GridLayoutManager(requireActivity(), 2)
-                val favDishAdapter = FavDishAdapter(this@FavoriteDishesFragment)
+                val favDishAdapter = FavDishAdapter(
+                    this@FavoriteDishesFragment
+                )
+
                 mBinding!!.recyclerViewFavDishes.adapter = favDishAdapter
 
                 if (it.isNotEmpty()) {

@@ -35,8 +35,13 @@ import java.util.*
 class DishDetailsFragment : Fragment() {
 
     private var mFavDishDetails: FavDish? = null
-
     private var mBinding: FragmentDishDetailsBinding? = null
+
+    private var primaryDarkColor: Int? = null
+    private var primaryColor: Int? = null
+    private var whiteColor: Int? = null
+
+    private var resourceDrawable: Drawable? = null
 
     private val mFavDishViewModel: FavDishViewModel by viewModels {
         FavDishViewModelFactory(((requireActivity().application) as FavDishApplication).repository)
@@ -55,41 +60,7 @@ class DishDetailsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_share_dish -> {
-                val type = "text/plain"
-                val subject = "Checkout this dish recipe"
-                var extraText = ""
-                val shareWith = "Share with"
-
-                mFavDishDetails?.let {
-                    var image = ""
-                    if (it.imageSource == Constants.DISH_IMAGE_SOURCE_ONLINE) {
-                        image = it.image
-                    }
-
-                    var cookingInstruction: String
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        cookingInstruction = Html.fromHtml(
-                            it.directionToCook,
-                            Html.FROM_HTML_MODE_COMPACT
-                        ).toString()
-                    } else {
-                        @Suppress("DEPRECATION")
-                        cookingInstruction = Html.fromHtml(it.directionToCook).toString()
-                    }
-
-                    extraText =
-                        "$image \n" +
-                                "\n Title:  ${it.title} \n\n Type: ${it.type} \n\n Category: ${it.category}" +
-                                "\n\n Ingredients: \n ${it.ingredients} \n\n Instructions To Cook: \n $cookingInstruction" +
-                                "\n\n Time required to cook the dish approx ${it.cookingTime} minutes."
-                }
-                val intent = Intent(Intent.ACTION_SEND)
-                intent.type = type
-                intent.putExtra(Intent.EXTRA_SUBJECT, subject)
-                intent.putExtra(Intent.EXTRA_TEXT, extraText)
-                startActivity(Intent.createChooser(intent, shareWith))
-
+                shareDishDetails()
                 return true
             }
         }
@@ -99,88 +70,86 @@ class DishDetailsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mBinding = FragmentDishDetailsBinding.inflate(inflater, container, false)
         return mBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val args: DishDetailsFragmentArgs by navArgs()
 
+        val args: DishDetailsFragmentArgs by navArgs()
         mFavDishDetails = args.dishDetails
+
+        primaryDarkColor = ContextCompat.getColor(requireContext(), R.color.primaryDarkColor)
+        primaryColor = ContextCompat.getColor(requireContext(), R.color.primaryColor)
+        whiteColor = ContextCompat.getColor(requireContext(), R.color.white)
 
         args.let {
             try {
-                Glide.with(requireActivity())
-                    .load(it.dishDetails.image)
-                    .centerCrop()
-                    .listener(object : RequestListener<Drawable> {
-                        override fun onLoadFailed(
-                            e: GlideException?,
-                            model: Any?,
-                            target: Target<Drawable>?,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            Log.e("TAG", "Failed load image", e)
-                            return false
-                        }
-
-                        override fun onResourceReady(
-                            resource: Drawable?,
-                            model: Any?,
-                            target: Target<Drawable>?,
-                            dataSource: DataSource?,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            resource?.let {
-                                Palette.from(resource.toBitmap())
-                                    .generate { palette ->
-                                        val intColor = palette?.vibrantSwatch?.rgb ?: 0
-                                        if(intColor != 0){
-                                            mBinding!!.rlDishDetailMain.setBackgroundColor(intColor)
-                                            requireActivity().window.navigationBarColor = intColor
-                                            requireActivity().window.statusBarColor = intColor
-                                            if(requireActivity() is MainActivity){
-                                                (activity as MainActivity?)?.changeActionBarColor(intColor)
-                                            }
-                                        }
-                                    }
-                            }
-                            return false
-                        }
-                    }).into(mBinding!!.ivDishImage)
-
+                loadImageToUIView(it)
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-
-            mBinding!!.tvTitle.text = it.dishDetails.title
-            mBinding!!.tvType.text =
-                it.dishDetails.type.capitalize(Locale.ROOT) // Used to make first letter capital
-            mBinding!!.tvCategory.text = it.dishDetails.category
-            mBinding!!.tvIngredients.text = it.dishDetails.ingredients
-            // mBinding!!.tvCookingDirection.text = it.dishDetails.directionToCook
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                mBinding!!.tvCookingDirection.text = Html.fromHtml(
-                    it.dishDetails.directionToCook,
-                    Html.FROM_HTML_MODE_COMPACT
-                )
-            } else {
-                @Suppress("DEPRECATION")
-                mBinding!!.tvCookingDirection.text = Html.fromHtml(it.dishDetails.directionToCook)
-            }
-
-            mBinding!!.tvCookingTime.text =
-                getString(R.string.label_estimate_cooking_time, it.dishDetails.cookingTime)
+            setDishDetailsInfoToUI(it)
 
             if (args.dishDetails.favoriteDish)
                 setIvFavoriteDishImage(R.drawable.ic_favorite_selected)
             else
                 setIvFavoriteDishImage(R.drawable.ic_favorite_unselected)
         }
+        addDishToFavorites(args)
+    }
 
+    override fun onResume() {
+        changeDishDetailsThemeColor()
+        super.onResume()
+    }
+
+    override fun onStop() {
+        requireActivity().window.statusBarColor = primaryDarkColor!!
+        requireActivity().window.navigationBarColor = primaryDarkColor!!
+
+        changeToolbarAndTextColor(whiteColor!!, primaryDarkColor!!)
+        visibleToolbarDivider(View.VISIBLE)
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mBinding = null
+    }
+
+    private fun loadImageToUIView(it: DishDetailsFragmentArgs) {
+        Glide.with(requireActivity())
+            .load(it.dishDetails.image)
+            .centerCrop()
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    Log.e("TAG", "Failed load image", e)
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    resourceDrawable = resource
+                    changeDishDetailsThemeColor()
+                    return false
+                }
+            }).into(mBinding!!.ivDishImage)
+    }
+
+    private fun addDishToFavorites(args: DishDetailsFragmentArgs) {
         mBinding!!.ivFavoriteDish.setOnClickListener {
 
             args.dishDetails.favoriteDish = !args.dishDetails.favoriteDish
@@ -197,6 +166,50 @@ class DishDetailsFragment : Fragment() {
                 setIvFavoriteDishImage(R.drawable.ic_favorite_unselected)
                 makeToastText(getString(R.string.msg_removed_from_favorites))
             }
+        }
+    }
+
+    private fun setDishDetailsInfoToUI(it: DishDetailsFragmentArgs) {
+        mBinding!!.tvTitle.text = it.dishDetails.title
+        mBinding!!.tvType.text =
+            it.dishDetails.type.capitalize(Locale.ROOT) // Used to make first letter capital
+        mBinding!!.tvCategory.text = it.dishDetails.category
+        mBinding!!.tvIngredients.text = it.dishDetails.ingredients
+        // mBinding!!.tvCookingDirection.text = it.dishDetails.directionToCook
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            mBinding!!.tvCookingDirection.text = Html.fromHtml(
+                it.dishDetails.directionToCook,
+                Html.FROM_HTML_MODE_COMPACT
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            mBinding!!.tvCookingDirection.text = Html.fromHtml(it.dishDetails.directionToCook)
+        }
+
+        mBinding!!.tvCookingTime.text =
+            getString(R.string.label_estimate_cooking_time, it.dishDetails.cookingTime)
+    }
+
+    private fun changeDishDetailsThemeColor() {
+        resourceDrawable?.let {
+            Palette.from(resourceDrawable!!.toBitmap())
+                .generate { palette ->
+                    val lightColor = palette?.lightVibrantSwatch?.rgb ?: 0
+                    val darkColor = palette?.darkVibrantSwatch?.rgb ?: 0
+
+                    if (lightColor != 0 && darkColor != 0) {
+                        mBinding!!.rlDishDetailMain.setBackgroundColor(
+                            lightColor
+                        )
+                        requireActivity().window.navigationBarColor = darkColor
+                        requireActivity().window.statusBarColor = lightColor
+                        changeToolbarAndTextColor(darkColor, whiteColor!!)
+                        visibleToolbarDivider(View.GONE)
+                    } else {
+                        changeToolbarAndTextColor(primaryColor!!, whiteColor!!)
+                    }
+                }
         }
     }
 
@@ -226,8 +239,56 @@ class DishDetailsFragment : Fragment() {
         ).show()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mBinding = null
+    private fun visibleToolbarDivider(hide: Int) {
+        if (requireActivity() is MainActivity) {
+            (activity as MainActivity?)?.hideActionBarDivider(
+                hide
+            )
+        }
     }
+
+    private fun changeToolbarAndTextColor(actionBarColor: Int, actionBarTitleColor: Int) {
+        if (requireActivity() is MainActivity) {
+            (activity as MainActivity?)?.changeActionBarColor(actionBarColor)
+            (activity as MainActivity?)?.changeActionBarTitleTextColor(actionBarTitleColor)
+        }
+    }
+
+    private fun shareDishDetails() {
+        val type = "text/plain"
+        val subject = "Checkout this dish recipe"
+        var extraText = ""
+        val shareWith = "Share with"
+
+        mFavDishDetails?.let {
+            var image = ""
+            if (it.imageSource == Constants.DISH_IMAGE_SOURCE_ONLINE) {
+                image = it.image
+            }
+
+            val cookingInstruction: String
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                cookingInstruction = Html.fromHtml(
+                    it.directionToCook,
+                    Html.FROM_HTML_MODE_COMPACT
+                ).toString()
+            } else {
+                @Suppress("DEPRECATION")
+                cookingInstruction = Html.fromHtml(it.directionToCook).toString()
+            }
+
+            extraText =
+                "$image \n" +
+                        "\n Title:  ${it.title} \n\n Type: ${it.type} \n\n Category: ${it.category}" +
+                        "\n\n Ingredients: \n ${it.ingredients} \n\n Instructions To Cook: \n $cookingInstruction" +
+                        "\n\n Time required to cook the dish approx ${it.cookingTime} minutes."
+        }
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = type
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+        intent.putExtra(Intent.EXTRA_TEXT, extraText)
+        startActivity(Intent.createChooser(intent, shareWith))
+    }
+
 }

@@ -1,7 +1,9 @@
 package com.udemy_jetpack.favdish.view.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -20,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var mNavController: NavController
+    private var isAppSettingOpen = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +51,31 @@ class MainActivity : AppCompatActivity() {
         }
 
         startWork()
+
+    }
+
+    fun appSettings() {
+        if (isAppSettingOpen) {
+            openAppSetting()
+        } else {
+            closeAppSetting()
+        }
+    }
+
+    private fun openAppSetting() {
+        isAppSettingOpen = false
+        mBinding.settingTheme.animate().apply {
+            duration = 300
+            translationY(0f)
+        }
+    }
+
+    fun closeAppSetting() {
+        isAppSettingOpen = true
+        mBinding.settingTheme.animate().apply {
+            duration = 150
+            translationY(-950f)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -62,15 +90,25 @@ class MainActivity : AppCompatActivity() {
         mBinding.toolbar.title = title
     }
 
+    fun changeActionBarTitleTextColor(color: Int) {
+        mBinding.toolbar.setTitleTextColor(color)
+    }
+
+    fun hideActionBarDivider(hide: Int) {
+        mBinding.toolbarDividerLine.visibility = hide
+    }
+
     fun hideBottomNavigationView() {
         mBinding.navView.clearAnimation()
         mBinding.navView.animate().translationY(mBinding.navView.height.toFloat()).duration = 300
         mBinding.navView.visibility = View.GONE
+        mBinding.toolbarDividerLineNavView.visibility = View.GONE
     }
 
     fun showBottomNavigationView() {
         mBinding.navView.clearAnimation()
         mBinding.navView.animate().translationY(0f).duration = 300
+        mBinding.toolbarDividerLineNavView.visibility = View.VISIBLE
         mBinding.navView.visibility = View.VISIBLE
     }
 
@@ -81,7 +119,7 @@ class MainActivity : AppCompatActivity() {
         .build()
 
     private fun createWorkRequest() =
-        PeriodicWorkRequestBuilder<NotifyWorker>(15, TimeUnit.MINUTES)
+        PeriodicWorkRequestBuilder<NotifyWorker>(6, TimeUnit.HOURS)
             .setConstraints(createConstraints()).build()
 
     private fun startWork() {

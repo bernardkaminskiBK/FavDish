@@ -21,6 +21,7 @@ class FavDishAdapter(private val fragment: Fragment) :
     RecyclerView.Adapter<FavDishAdapter.ViewHolder>() {
 
     private var dishes: List<FavDish> = listOf()
+    private var isClickable: Boolean = true
 
     class ViewHolder(view: ItemDishLayoutBinding) : RecyclerView.ViewHolder(view.root) {
         val ivDishImage = view.ivDishImage
@@ -44,14 +45,15 @@ class FavDishAdapter(private val fragment: Fragment) :
         holder.itemView.animation =
             AnimationUtils.loadAnimation(holder.itemView.context, R.anim.animation_one)
 
-        holder.itemView.setOnClickListener {
-            if (fragment is AllDishesFragment) {
-                fragment.dishDetails(dish)
+            holder.itemView.setOnClickListener {
+                if (fragment is AllDishesFragment) {
+                    fragment.dishDetails(dish)
+                }
+                if (fragment is FavoriteDishesFragment) {
+                    fragment.dishDetails(dish)
+                }
             }
-            if (fragment is FavoriteDishesFragment) {
-                fragment.dishDetails(dish)
-            }
-        }
+
 
         holder.ibMore.setOnClickListener {
             val popup = PopupMenu(fragment.context, holder.ibMore)

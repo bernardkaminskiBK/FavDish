@@ -22,4 +22,7 @@
 
     <color name="divider_line_color">#e0e0e0</color>
 
+    <color name="md_lime_500">#6D9904</color>
+    <color name="md_lime_700">#587C02</color>
+
 </resources>
