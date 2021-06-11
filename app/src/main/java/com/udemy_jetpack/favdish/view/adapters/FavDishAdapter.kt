@@ -21,7 +21,6 @@ class FavDishAdapter(private val fragment: Fragment) :
     RecyclerView.Adapter<FavDishAdapter.ViewHolder>() {
 
     private var dishes: List<FavDish> = listOf()
-    private var isClickable: Boolean = true
 
     class ViewHolder(view: ItemDishLayoutBinding) : RecyclerView.ViewHolder(view.root) {
         val ivDishImage = view.ivDishImage
