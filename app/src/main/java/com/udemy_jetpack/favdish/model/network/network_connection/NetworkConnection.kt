@@ -42,12 +42,10 @@ class NetworkConnection(private val context: Context) : LiveData<Boolean>() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //            connectivityManager.unregisterNetworkCallback(connectivityManagerCallback())
 //            println("5. connectivityManager.unregisterNetworkCallback(connectivityManagerCallback() zbehol som")
-            if (networkCallback != null && connectivityManager != null) {
-                try {
-                    connectivityManager.unregisterNetworkCallback(connectivityManagerCallback())
-                } catch (e: Exception) {
-                    Log.d("connectivity", "unregister failed")
-                }
+            try {
+                connectivityManager.unregisterNetworkCallback(connectivityManagerCallback())
+            } catch (e: Exception) {
+                Log.d("connectivity", "unregister failed")
             }
         } else {
             context.unregisterReceiver(networkReceiver)

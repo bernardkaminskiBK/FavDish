@@ -68,6 +68,7 @@ class MainActivity : AppCompatActivity() {
             duration = 300
             translationY(0f)
         }
+        mBinding.viewDisableLayout.visibility = View.VISIBLE
     }
 
     fun closeAppSetting() {
@@ -76,6 +77,7 @@ class MainActivity : AppCompatActivity() {
             duration = 150
             translationY(-950f)
         }
+        mBinding.viewDisableLayout.visibility = View.GONE
     }
 
     override fun onSupportNavigateUp(): Boolean {

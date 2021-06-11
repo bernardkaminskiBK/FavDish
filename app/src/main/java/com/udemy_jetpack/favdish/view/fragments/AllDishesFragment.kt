@@ -158,14 +158,10 @@ class AllDishesFragment : Fragment() {
                 filterDishesListDialog()
                 return true
             }
-            //TODO: 1. I have added an icon and I need to figure out the logic of how to implement
-            // the setting window where the user will be able to change the color of the app theme, yeah
-            // I know it is a nice thought. :-)
             R.id.action_theme_setting -> {
                 if (requireActivity() is MainActivity) {
                     (activity as MainActivity?)?.appSettings()
                 }
-                mBinding.fragmentAllDishes.alpha = 0.30f
                 return true
             }
         }
