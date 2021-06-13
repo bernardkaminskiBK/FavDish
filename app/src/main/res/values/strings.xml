@@ -69,6 +69,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="setting_theme">Setting theme</string>
 
-    <string name="about_disconnected">Wake up your internet connection to get a random dish.</string>
+    <string name="about_disconnected">Wake up your internet connection to get a random dish recipe.</string>
 
 </resources>

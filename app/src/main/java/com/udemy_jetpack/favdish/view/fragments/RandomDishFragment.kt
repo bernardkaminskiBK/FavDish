@@ -64,32 +64,15 @@ class RandomDishFragment : Fragment() {
         networkConnectivity.observe(viewLifecycleOwner, { isConnected ->
 
             if (isConnected) {
-                noInternetConnection(View.GONE)
-                setVisibilityOfElementsByConnectionToInternet(View.VISIBLE)
+                mBinding!!.swipeRefreshLayoutRandomDish.visibility = View.VISIBLE
+                mBinding!!.noInternet.noInternetConnection.visibility = View.GONE
                 mRandomDishViewModel.getRandomRecipeFromAPI()
             } else {
-                noInternetConnection(View.VISIBLE)
-                setVisibilityOfElementsByConnectionToInternet(View.GONE)
+                mBinding!!.swipeRefreshLayoutRandomDish.visibility = View.GONE
+                mBinding!!.noInternet.noInternetConnection.visibility = View.VISIBLE
             }
 
         })
-    }
-
-    private fun noInternetConnection(visibility: Int) {
-        mBinding!!.ivNoInternetConnection.visibility = visibility
-        mBinding!!.tvNoInternetConnection.visibility = visibility
-    }
-
-    private fun setVisibilityOfElementsByConnectionToInternet(visibility: Int) {
-        mBinding!!.flDishImage.visibility = visibility
-        mBinding!!.tvIngredientsLabel.visibility = visibility
-        mBinding!!.tvCookingDirection.visibility = visibility
-        mBinding!!.tvTitle.visibility = visibility
-        mBinding!!.tvType.visibility = visibility
-        mBinding!!.tvCategory.visibility = visibility
-        mBinding!!.tvIngredients.visibility = visibility
-        mBinding!!.tvCookingDirection.visibility = visibility
-        mBinding!!.tvCookingTime.visibility = visibility
     }
 
     private fun randomDishViewModelObserver() {
