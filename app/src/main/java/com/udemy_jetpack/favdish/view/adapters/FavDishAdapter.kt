@@ -44,14 +44,14 @@ class FavDishAdapter(private val fragment: Fragment) :
         holder.itemView.animation =
             AnimationUtils.loadAnimation(holder.itemView.context, R.anim.animation_one)
 
-            holder.itemView.setOnClickListener {
-                if (fragment is AllDishesFragment) {
-                    fragment.dishDetails(dish)
-                }
-                if (fragment is FavoriteDishesFragment) {
-                    fragment.dishDetails(dish)
-                }
+        holder.itemView.setOnClickListener {
+            if (fragment is AllDishesFragment) {
+                fragment.dishDetails(position, dish)
             }
+            if (fragment is FavoriteDishesFragment) {
+                fragment.dishDetails(position, dish)
+            }
+        }
 
 
         holder.ibMore.setOnClickListener {

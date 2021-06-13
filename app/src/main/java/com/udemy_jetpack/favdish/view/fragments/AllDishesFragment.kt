@@ -33,6 +33,8 @@ class AllDishesFragment : Fragment() {
 
     private var actionAddDishMenuItem: MenuItem? = null
 
+    private var lastPosition: Int = 0
+
     private val mFavDishViewModel: FavDishViewModel by viewModels {
         FavDishViewModelFactory((requireActivity().application as FavDishApplication).repository)
     }
@@ -62,6 +64,8 @@ class AllDishesFragment : Fragment() {
                 mFavDishAdapter = FavDishAdapter(this@AllDishesFragment)
                 mBinding.rvDishesList.adapter = mFavDishAdapter
 
+                mBinding.rvDishesList.scrollToPosition(lastPosition)
+
                 if (it.isNotEmpty()) {
                     mBinding.rvDishesList.visibility = View.VISIBLE
                     mBinding.tvNoDishesAddedYet.visibility = View.GONE
@@ -75,7 +79,7 @@ class AllDishesFragment : Fragment() {
         }
     }
 
-    fun dishDetails(favDish: FavDish) {
+    fun dishDetails(position: Int, favDish: FavDish) {
         findNavController().navigate(
             AllDishesFragmentDirections.actionNavigationAllDishesToNavigationDishDetails(
                 favDish
@@ -84,6 +88,7 @@ class AllDishesFragment : Fragment() {
         if (requireActivity() is MainActivity) {
             (activity as MainActivity?)?.hideBottomNavigationView()
         }
+        lastPosition = position
     }
 
     fun deleteDish(dish: FavDish) {

@@ -19,6 +19,7 @@ import com.udemy_jetpack.favdish.viewmodel.FavDishViewModelFactory
 class FavoriteDishesFragment : Fragment() {
 
     private var mBinding: FragmentFavoriteDishesBinding? = null
+    private var lastPosition: Int = 0
 
     private val mFavDishViewModel: FavDishViewModel by viewModels {
         FavDishViewModelFactory((requireActivity().application as FavDishApplication).repository)
@@ -36,12 +37,6 @@ class FavoriteDishesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        requireActivity().window.statusBarColor = resources.getColor(R.color.primaryDarkColor)
-//        requireActivity().window.navigationBarColor = resources.getColor(R.color.primaryColor)
-//        if (requireActivity() is MainActivity) {
-//            (activity as MainActivity?)?.changeActionBarColor(resources.getColor(R.color.primaryColor))
-//        }
-
         mFavDishViewModel.favoriteDishes.observe(viewLifecycleOwner) { dishes ->
             dishes.let {
 
@@ -52,6 +47,7 @@ class FavoriteDishesFragment : Fragment() {
                 )
 
                 mBinding!!.recyclerViewFavDishes.adapter = favDishAdapter
+                mBinding!!.recyclerViewFavDishes.scrollToPosition(lastPosition)
 
                 if (it.isNotEmpty()) {
                     mBinding!!.recyclerViewFavDishes.visibility = View.VISIBLE
@@ -65,7 +61,7 @@ class FavoriteDishesFragment : Fragment() {
         }
     }
 
-    fun dishDetails(dish: FavDish) {
+    fun dishDetails(position: Int, dish: FavDish) {
         findNavController().navigate(
             FavoriteDishesFragmentDirections.actionNavigationFavoriteDishesToNavigationDishDetails(
                 dish
@@ -74,6 +70,7 @@ class FavoriteDishesFragment : Fragment() {
         if (requireActivity() is MainActivity) {
             (activity as MainActivity?)!!.hideBottomNavigationView()
         }
+        lastPosition = position
     }
 
     override fun onResume() {
