@@ -76,9 +76,27 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         setupActionBar()
+        updateDishDetails()
 
+        mBinding.ivAddDishImage.setOnClickListener(this@AddUpdateDishActivity)
+
+        mBinding.etType.setOnClickListener(this)
+        mBinding.etCategory.setOnClickListener(this)
+        mBinding.etCookingTime.setOnClickListener(this)
+        mBinding.btnAddDish.setOnClickListener(this)
+    }
+
+    private fun updateDishDetails() {
         mFavDishDetails?.let {
             if (it.id != 0) {
+
+                mBinding.ivAddDishImage.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this,
+                        R.drawable.ic_vector_edit
+                    )
+                )
+
                 mImagePath = it.image
                 Glide.with(this@AddUpdateDishActivity)
                     .load(mImagePath)
@@ -95,13 +113,6 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
                 mBinding.btnAddDish.text = getString(R.string.lbl_update_dish)
             }
         }
-
-        mBinding.ivAddDishImage.setOnClickListener(this@AddUpdateDishActivity)
-
-        mBinding.etType.setOnClickListener(this)
-        mBinding.etCategory.setOnClickListener(this)
-        mBinding.etCookingTime.setOnClickListener(this)
-        mBinding.btnAddDish.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
