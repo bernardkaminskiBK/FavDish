@@ -15,7 +15,6 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -44,7 +43,9 @@ import com.udemy_jetpack.favdish.databinding.ActivityAddUpdateDishBinding
 import com.udemy_jetpack.favdish.databinding.DialogCustomImageSelectionBinding
 import com.udemy_jetpack.favdish.databinding.DialogCustomListBinding
 import com.udemy_jetpack.favdish.model.entities.FavDish
+import com.udemy_jetpack.favdish.utils.Animations
 import com.udemy_jetpack.favdish.utils.Constants
+import com.udemy_jetpack.favdish.utils.SetThemeColor
 import com.udemy_jetpack.favdish.view.adapters.CustomListItemAdapter
 import com.udemy_jetpack.favdish.viewmodel.FavDishViewModel
 import com.udemy_jetpack.favdish.viewmodel.FavDishViewModelFactory
@@ -67,6 +68,8 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        SetThemeColor.themePreferences(this, theme)
 
         mBinding = ActivityAddUpdateDishBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
@@ -445,6 +448,7 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
 
         mCustomListDialog.setContentView(binding.root)
         binding.tvTitle.text = title
+        Animations.animTitleSlideRight(binding.tvTitle)
 
         binding.rvList.layoutManager = LinearLayoutManager(this)
 

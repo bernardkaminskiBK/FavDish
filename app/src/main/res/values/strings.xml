@@ -22,9 +22,9 @@
 
     <string name="alert_dialog_text">It Looks like you have turned off permissions required for this feature. It can be enabled under Application Settings</string>
 
-    <string name="title_select_dish_type">SELECT DISH TYPE</string>
-    <string name="title_select_dish_category">SELECT DISH CATEGORY</string>
-    <string name="title_select_dish_time">SELECT COOKING TIME IN MINUTES</string>
+    <string name="title_select_dish_type">Select dish type: </string>
+    <string name="title_select_dish_category">Select dish category: </string>
+    <string name="title_select_dish_time">Select cooking time in minutes: </string>
 
     <string name="err_msg_select_dish_image">Select dish image.</string>
     <string name="err_msg_enter_dish_title">Enter dish title.</string>
@@ -57,7 +57,7 @@
     <string name="lbl_no">No</string>
 
     <string name="action_filter_dishes">Filter Dishes</string>
-    <string name="title_select_item_to_filter">Select item to filter</string>
+    <string name="title_select_item_to_filter">Select item to filter: </string>
 
     <string name="msg_already_added_to_favorites">You have already added the dish to your favorites.</string>
     <string name="please_wait">Please wait...</string>
@@ -70,5 +70,6 @@
     <string name="setting_theme">Setting theme</string>
 
     <string name="about_disconnected">Wake up your internet connection to get a random dish recipe.</string>
+    <string name="select_color_theme">Select theme color:</string>
 
 </resources>

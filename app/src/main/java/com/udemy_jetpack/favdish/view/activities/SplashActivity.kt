@@ -12,10 +12,13 @@ import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.udemy_jetpack.favdish.R
 import com.udemy_jetpack.favdish.databinding.ActivitySplashBinding
+import com.udemy_jetpack.favdish.utils.SetThemeColor
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        SetThemeColor.themePreferences(this, theme)
 
         val splashBinding: ActivitySplashBinding =
             ActivitySplashBinding.inflate(layoutInflater)

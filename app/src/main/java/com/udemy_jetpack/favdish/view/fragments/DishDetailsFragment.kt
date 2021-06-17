@@ -81,8 +81,8 @@ class DishDetailsFragment : Fragment() {
         val args: DishDetailsFragmentArgs by navArgs()
         mFavDishDetails = args.dishDetails
 
-        primaryDarkColor = ContextCompat.getColor(requireContext(), R.color.primaryDarkColor)
-        primaryColor = ContextCompat.getColor(requireContext(), R.color.primaryColor)
+        primaryDarkColor = requireActivity().window.statusBarColor
+        primaryColor = requireActivity().window.navigationBarColor
         whiteColor = ContextCompat.getColor(requireContext(), R.color.white)
 
         args.let {
@@ -108,7 +108,7 @@ class DishDetailsFragment : Fragment() {
 
     override fun onStop() {
         requireActivity().window.statusBarColor = primaryDarkColor!!
-        requireActivity().window.navigationBarColor = primaryDarkColor!!
+        requireActivity().window.navigationBarColor = primaryColor!!
 
         changeToolbarAndTextColor(whiteColor!!, primaryDarkColor!!)
         visibleToolbarDivider(View.VISIBLE)

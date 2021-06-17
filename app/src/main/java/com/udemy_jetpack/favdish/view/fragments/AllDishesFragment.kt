@@ -15,6 +15,7 @@ import com.udemy_jetpack.favdish.application.FavDishApplication
 import com.udemy_jetpack.favdish.databinding.DialogCustomListBinding
 import com.udemy_jetpack.favdish.databinding.FragmentAllDishesBinding
 import com.udemy_jetpack.favdish.model.entities.FavDish
+import com.udemy_jetpack.favdish.utils.Animations
 import com.udemy_jetpack.favdish.utils.Constants
 import com.udemy_jetpack.favdish.view.activities.AddUpdateDishActivity
 import com.udemy_jetpack.favdish.view.activities.MainActivity
@@ -56,7 +57,6 @@ class AllDishesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         mFavDishViewModel.allDishesList.observe(viewLifecycleOwner) { dishes ->
             dishes.let {
 
@@ -66,15 +66,8 @@ class AllDishesFragment : Fragment() {
 
                 mBinding.rvDishesList.scrollToPosition(lastPosition)
 
-                if (it.isNotEmpty()) {
-                    mBinding.rvDishesList.visibility = View.VISIBLE
-                    mBinding.tvNoDishesAddedYet.visibility = View.GONE
-                    mFavDishAdapter.dishesList(it)
-                } else {
-                    mBinding.rvDishesList.visibility = View.GONE
-                    mBinding.tvNoDishesAddedYet.visibility = View.VISIBLE
-                    mBinding.tvNoDishesAddedYet.text = getString(R.string.list_of_dish_empty)
-                }
+                val labelText = getString(R.string.list_of_dish_empty)
+                setUIByContent(it, labelText)
             }
         }
     }
@@ -95,7 +88,7 @@ class AllDishesFragment : Fragment() {
         val builder = AlertDialog.Builder(requireActivity())
         builder.setTitle(getString(R.string.title_delete_dish))
         builder.setMessage(getString(R.string.msg_delete_dish_dialog, dish.title))
-        builder.setIcon(android.R.drawable.ic_dialog_alert)
+        builder.setIcon(R.drawable.ic_baseline_delete_forever_24)
         builder.setPositiveButton(getString(R.string.lbl_yes)) { dialogInterface, _ ->
             mFavDishViewModel.delete(dish)
             dialogInterface.dismiss()
@@ -106,6 +99,8 @@ class AllDishesFragment : Fragment() {
         }
         val alertDialog: AlertDialog = builder.create()
         alertDialog.setCancelable(false)
+
+
         alertDialog.show()
     }
 
@@ -116,6 +111,8 @@ class AllDishesFragment : Fragment() {
 
         mCustomListDialog.setContentView(binding.root)
         binding.tvTitle.text = getString(R.string.title_select_item_to_filter)
+
+        Animations.animTitleSlideRight(binding.tvTitle)
 
         val dishTypes = Constants.dishTypes()
         dishTypes.add(0, Constants.ALL_ITEMS)
@@ -130,6 +127,7 @@ class AllDishesFragment : Fragment() {
             )
 
         binding.rvList.adapter = adapter
+
         mCustomListDialog.show()
     }
 
@@ -190,34 +188,31 @@ class AllDishesFragment : Fragment() {
         if (filterItemSelection == Constants.ALL_ITEMS) {
             mFavDishViewModel.allDishesList.observe(viewLifecycleOwner) { dishes ->
                 dishes.let {
-
-                    if (it.isNotEmpty()) {
-                        mBinding.rvDishesList.visibility = View.VISIBLE
-                        mBinding.tvNoDishesAddedYet.visibility = View.GONE
-                        mFavDishAdapter.dishesList(it)
-                    } else {
-                        mBinding.rvDishesList.visibility = View.GONE
-                        mBinding.tvNoDishesAddedYet.visibility = View.VISIBLE
-                        mBinding.tvNoDishesAddedYet.text = getString(R.string.list_of_dish_empty)
-                    }
+                    val labelText = getString(R.string.list_of_dish_empty)
+                    setUIByContent(it, labelText)
                 }
             }
         } else {
             mFavDishViewModel.getFilteredList(filterItemSelection)
                 .observe(viewLifecycleOwner) { dishes ->
                     dishes.let {
-                        if (it.isNotEmpty()) {
-                            mBinding.rvDishesList.visibility = View.VISIBLE
-                            mBinding.tvNoDishesAddedYet.visibility = View.GONE
-                            mFavDishAdapter.dishesList(it)
-                        } else {
-                            mBinding.rvDishesList.visibility = View.GONE
-                            mBinding.tvNoDishesAddedYet.visibility = View.VISIBLE
-                            mBinding.tvNoDishesAddedYet.text =
-                                getString(R.string.label_no_dishes_added_yet, filterItemSelection)
-                        }
+                        val labelText =
+                            getString(R.string.label_no_dishes_added_yet, filterItemSelection)
+                        setUIByContent(it, labelText)
                     }
                 }
+        }
+    }
+
+    private fun setUIByContent(list: List<FavDish>, labelText: String) {
+        if (list.isNotEmpty()) {
+            mBinding.rvDishesList.visibility = View.VISIBLE
+            mBinding.tvNoDishesAddedYet.visibility = View.GONE
+            mFavDishAdapter.dishesList(list)
+        } else {
+            mBinding.rvDishesList.visibility = View.GONE
+            mBinding.tvNoDishesAddedYet.visibility = View.VISIBLE
+            mBinding.tvNoDishesAddedYet.text = labelText
         }
     }
 

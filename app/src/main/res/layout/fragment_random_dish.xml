@@ -55,7 +55,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="top|end"
                         android:layout_margin="@dimen/_10sdp"
-                        android:background="@drawable/favorite_button_background"
+                        android:background="@drawable/rounded_background"
                         android:elevation="@dimen/_10sdp">
 
                         <ImageView

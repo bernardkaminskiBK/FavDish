@@ -9,7 +9,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="primaryColor">#ffa000</color>
-    <color name="primaryLightColor">#ffd149</color>
+    <color name="primaryLightColor">#ffa000</color>
     <color name="primaryDarkColor">#c67100</color>
     <color name="primaryTextColor">#f9f9f9</color>
     <color name="dish_image_background">#E1E1E1</color>
@@ -22,7 +22,32 @@
 
     <color name="divider_line_color">#e0e0e0</color>
 
-    <color name="md_lime_500">#6D9904</color>
-    <color name="md_lime_700">#587C02</color>
+    <color name="md_lime_light">#6D9904</color>
+    <color name="md_lime_dark">#587C02</color>
+
+    <color name="md_red_light">#970606</color>
+    <color name="md_red_dark">#770404</color>
+
+    <color name="md_gray_light">#212121</color>
+    <color name="md_gray_dark">#000000</color>
+
+    <color name="md_pink_light">#f8bbd0</color>
+    <color name="md_pink_dark">#f48fb1</color>
+
+    <color name="md_lightBlue_light">#49a7cc</color>
+    <color name="md_lightBlue_dark">#0094cc</color>
+
+    <color name="md_deepOrange_light">#d84315</color>
+    <color name="md_deepOrange_dark">#bf360c</color>
+
+    <color name="md_deepPink_light">#ad1457</color>
+    <color name="md_deepPink_dark">#880e4f</color>
+
+    <color name="md_teal_light">#009688</color>
+    <color name="md_teal_dark">#00897b</color>
+
+    <color name="md_brown_light">#795548</color>
+    <color name="md_brown_dark">#6d4c41</color>
+
 
 </resources>

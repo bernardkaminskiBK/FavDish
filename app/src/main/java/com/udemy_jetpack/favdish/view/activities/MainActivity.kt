@@ -1,9 +1,10 @@
 package com.udemy_jetpack.favdish.view.activities
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -16,19 +17,42 @@ import com.udemy_jetpack.favdish.R
 import com.udemy_jetpack.favdish.databinding.ActivityMainBinding
 import com.udemy_jetpack.favdish.model.notification.NotifyWorker
 import com.udemy_jetpack.favdish.utils.Constants
+import com.udemy_jetpack.favdish.utils.SetThemeColor
 import java.util.concurrent.TimeUnit
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var mNavController: NavController
     private var isAppSettingOpen = true
 
+    private lateinit var sharedPreferences: SharedPreferences
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        sharedPreferences =
+            getSharedPreferences(Constants.themePref, Context.MODE_PRIVATE)
+
+        SetThemeColor.themePreferences(this, theme)
+
         mBinding = ActivityMainBinding.inflate(layoutInflater)
+        setSupportActionBar(mBinding.toolbar)
         setContentView(mBinding.root)
+
+        mBinding.limeTheme.setOnClickListener(this)
+        mBinding.redTheme.setOnClickListener(this)
+        mBinding.grayTheme.setOnClickListener(this)
+        mBinding.pinkTheme.setOnClickListener(this)
+        mBinding.lightBlueTheme.setOnClickListener(this)
+        mBinding.orangeTheme.setOnClickListener(this)
+        mBinding.deepOrangeTheme.setOnClickListener(this)
+        mBinding.deepPinkTheme.setOnClickListener(this)
+        mBinding.tealTheme.setOnClickListener(this)
+        mBinding.brownTheme.setOnClickListener(this)
+
+        mBinding.viewDisableLayout.setOnClickListener(this)
 
         mNavController = findNavController(R.id.nav_host_fragment)
 
@@ -39,8 +63,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_random_dishes
             )
         )
-
-        setSupportActionBar(mBinding.toolbar)
 
         setupActionBarWithNavController(mNavController, appBarConfiguration)
         mBinding.navView.setupWithNavController(mNavController)
@@ -54,6 +76,63 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onClick(click: View) {
+        when (click.id) {
+            R.id.red_theme -> {
+                editThemeColorPreferences(Constants.colorRed)
+                return
+            }
+            R.id.lime_theme -> {
+                editThemeColorPreferences(Constants.colorLime)
+                return
+            }
+            R.id.gray_theme -> {
+                editThemeColorPreferences(Constants.colorGray)
+                return
+            }
+            R.id.pink_theme -> {
+                editThemeColorPreferences(Constants.colorPink)
+                return
+            }
+            R.id.lightBlue_theme -> {
+                editThemeColorPreferences(Constants.colorLightBlue)
+                return
+            }
+            R.id.orange_theme -> {
+                editThemeColorPreferences(Constants.colorOrange)
+                return
+            }
+            R.id.deepOrange_theme -> {
+                editThemeColorPreferences(Constants.colorDeepOrange)
+                return
+            }
+            R.id.deepPink_theme -> {
+                editThemeColorPreferences(Constants.colorDeepPink)
+                return
+            }
+            R.id.teal_theme -> {
+                editThemeColorPreferences(Constants.colorTeal)
+                return
+            }
+            R.id.brown_theme -> {
+                editThemeColorPreferences(Constants.colorBrown)
+                return
+            }
+            R.id.viewDisableLayout -> {
+                closeAppSetting()
+                return
+            }
+        }
+    }
+
+    private fun editThemeColorPreferences(string: String) {
+        sharedPreferences.edit().putString(Constants.themeKey, string).apply()
+        val intent = intent // from getIntent()
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+        finish()
+        startActivity(intent)
+    }
+
     fun appSettings() {
         if (isAppSettingOpen) {
             openAppSetting()
@@ -65,7 +144,7 @@ class MainActivity : AppCompatActivity() {
     private fun openAppSetting() {
         isAppSettingOpen = false
         mBinding.settingTheme.animate().apply {
-            duration = 300
+            duration = 100
             translationY(0f)
         }
         mBinding.viewDisableLayout.visibility = View.VISIBLE
@@ -74,7 +153,7 @@ class MainActivity : AppCompatActivity() {
     fun closeAppSetting() {
         isAppSettingOpen = true
         mBinding.settingTheme.animate().apply {
-            duration = 150
+            duration = 300
             translationY(-950f)
         }
         mBinding.viewDisableLayout.visibility = View.GONE

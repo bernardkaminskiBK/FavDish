@@ -8,6 +8,7 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.LinearInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 
 object Animations {
@@ -82,4 +83,13 @@ object Animations {
             }
         })
     }
+
+    fun animTitleSlideRight(textView: TextView) {
+        textView.translationX = -1000f
+        textView.animate().apply {
+            duration = 700
+            translationXBy(1000f)
+        }
+    }
+
 }

@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.FavDish" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/primaryDarkColor</item>
-        <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
+        <item name="colorPrimary">?attr/colorPrimaryVariant</item>
+        <item name="colorPrimaryVariant">?attr/colorPrimaryVariant</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/secondaryColor</item>
@@ -12,11 +12,61 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="android:navigationBarColor" tools:targetApi="1">?attr/colorPrimaryVariant</item>
+        <item name="android:navigationBarColor" tools:targetApi="1">?attr/colorPrimary</item>
     </style>
 
     <style name="Theme.FavDish.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="OverlayThemeLime" parent="Theme.FavDish.NoActionBar">
+        <item name="colorPrimary">@color/md_lime_light</item>
+        <item name="colorPrimaryVariant">@color/md_lime_dark</item>
+    </style>
+
+    <style name="OverlayThemeRed" parent="Theme.FavDish.NoActionBar">
+        <item name="colorPrimary">@color/md_red_light</item>
+        <item name="colorPrimaryVariant">@color/md_red_dark</item>
+    </style>
+
+    <style name="OverlayThemeGray" parent="Theme.FavDish.NoActionBar">
+        <item name="colorPrimary">@color/md_gray_light</item>
+        <item name="colorPrimaryVariant">@color/md_gray_dark</item>
+    </style>
+
+    <style name="OverlayThemePink" parent="Theme.FavDish.NoActionBar">
+        <item name="colorPrimary">@color/md_pink_light</item>
+        <item name="colorPrimaryVariant">@color/md_pink_dark</item>
+    </style>
+
+    <style name="OverlayThemeLightBlue" parent="Theme.FavDish.NoActionBar">
+        <item name="colorPrimary">@color/md_lightBlue_light</item>
+        <item name="colorPrimaryVariant">@color/md_lightBlue_dark</item>
+    </style>
+
+    <style name="OverlayThemeLightOrange" parent="Theme.FavDish.NoActionBar">
+        <item name="colorPrimary">@color/primaryLightColor</item>
+        <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
+    </style>
+
+    <style name="OverlayThemeDeepOrange" parent="Theme.FavDish.NoActionBar">
+        <item name="colorPrimary">@color/md_deepOrange_light</item>
+        <item name="colorPrimaryVariant">@color/md_deepOrange_dark</item>
+    </style>
+
+    <style name="OverlayThemeDeepPink" parent="Theme.FavDish.NoActionBar">
+        <item name="colorPrimary">@color/md_deepPink_light</item>
+        <item name="colorPrimaryVariant">@color/md_deepPink_dark</item>
+    </style>
+
+    <style name="OverlayThemeTeal" parent="Theme.FavDish.NoActionBar">
+        <item name="colorPrimary">@color/md_teal_light</item>
+        <item name="colorPrimaryVariant">@color/md_teal_dark</item>
+    </style>
+
+    <style name="OverlayThemeBrown" parent="Theme.FavDish.NoActionBar">
+        <item name="colorPrimary">@color/md_brown_light</item>
+        <item name="colorPrimaryVariant">@color/md_brown_dark</item>
     </style>
 </resources>

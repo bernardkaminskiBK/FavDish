@@ -32,6 +32,20 @@ object Constants {
     const val NOTIFICATION_NAME = "FavDish"
     const val NOTIFICATION_CHANNEL = "FavDish_channel_01"
 
+    const val colorLime ="lime"
+    const val colorRed = "red"
+    const val colorGray = "gray"
+    const val colorPink = "pink"
+    const val colorLightBlue = "lightBlue"
+    const val colorOrange = "orange"
+    const val colorDeepOrange = "deepOrange"
+    const val colorDeepPink = "deepPink"
+    const val colorTeal = "teal"
+    const val colorBrown ="brown"
+
+    const val themePref = "ThemePref"
+    const val themeKey = "currentTheme"
+
     fun dishTypes(): ArrayList<String> {
         val list = ArrayList<String>()
         list.add("breakfast")
