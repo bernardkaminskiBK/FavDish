@@ -205,7 +205,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         .build()
 
     private fun createWorkRequest() =
-        PeriodicWorkRequestBuilder<NotifyWorker>(6, TimeUnit.HOURS)
+        PeriodicWorkRequestBuilder<NotifyWorker>(15, TimeUnit.MINUTES)
             .setConstraints(createConstraints()).build()
 
     private fun startWork() {

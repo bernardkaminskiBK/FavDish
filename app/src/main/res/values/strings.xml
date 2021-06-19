@@ -36,7 +36,7 @@
     <string name="all_entries_are_valid">All the entries are valid.</string>
 
     <string name="label_no_dishes_added_yet">No %1$s available</string>
-    <string name="list_of_dish_empty">The list of your fav dishes are empty</string>
+    <string name="list_of_dish_empty">The list of fav dishes are empty</string>
     <string name="label_no_fav_dishes_added_yet">No favorite dishes available</string>
     <string name="actual_dish_image">actual dish image</string>
     <string name="dish_details">Dish details</string>
@@ -65,7 +65,6 @@
 
     <string name="notification_title">Checkout new dish recipes</string>
     <string name="notification_subtitle">Tap for more details</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="setting_theme">Setting theme</string>
 
