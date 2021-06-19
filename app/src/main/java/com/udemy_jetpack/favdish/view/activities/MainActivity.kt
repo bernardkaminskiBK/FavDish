@@ -41,17 +41,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setSupportActionBar(mBinding.toolbar)
         setContentView(mBinding.root)
 
-        mBinding.limeTheme.setOnClickListener(this)
-        mBinding.redTheme.setOnClickListener(this)
-        mBinding.grayTheme.setOnClickListener(this)
-        mBinding.pinkTheme.setOnClickListener(this)
-        mBinding.lightBlueTheme.setOnClickListener(this)
-        mBinding.orangeTheme.setOnClickListener(this)
-        mBinding.deepOrangeTheme.setOnClickListener(this)
-        mBinding.deepPinkTheme.setOnClickListener(this)
-        mBinding.tealTheme.setOnClickListener(this)
-        mBinding.brownTheme.setOnClickListener(this)
-
+        selectColorSetOnClickListeners()
         mBinding.viewDisableLayout.setOnClickListener(this)
 
         mNavController = findNavController(R.id.nav_host_fragment)
@@ -125,9 +115,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun selectColorSetOnClickListeners() {
+        mBinding.limeTheme.setOnClickListener(this)
+        mBinding.redTheme.setOnClickListener(this)
+        mBinding.grayTheme.setOnClickListener(this)
+        mBinding.pinkTheme.setOnClickListener(this)
+        mBinding.lightBlueTheme.setOnClickListener(this)
+        mBinding.orangeTheme.setOnClickListener(this)
+        mBinding.deepOrangeTheme.setOnClickListener(this)
+        mBinding.deepPinkTheme.setOnClickListener(this)
+        mBinding.tealTheme.setOnClickListener(this)
+        mBinding.brownTheme.setOnClickListener(this)
+    }
+
     private fun editThemeColorPreferences(string: String) {
         sharedPreferences.edit().putString(Constants.themeKey, string).apply()
-        val intent = intent // from getIntent()
+        val intent = intent
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
         finish()
         startActivity(intent)
@@ -144,19 +147,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun openAppSetting() {
         isAppSettingOpen = false
         mBinding.settingTheme.animate().apply {
-            duration = 100
+            duration = 700
             translationY(0f)
         }
-        mBinding.viewDisableLayout.visibility = View.VISIBLE
+        mBinding.viewDisableLayout.animate().alpha(0.25f).duration = 700
+        mBinding.viewDisableLayout.isClickable = true
     }
 
     fun closeAppSetting() {
         isAppSettingOpen = true
         mBinding.settingTheme.animate().apply {
-            duration = 300
+            duration = 700
             translationY(-950f)
         }
-        mBinding.viewDisableLayout.visibility = View.GONE
+        mBinding.viewDisableLayout.animate().alpha(0.0f).duration = 700
+        mBinding.viewDisableLayout.isClickable = false
     }
 
     override fun onSupportNavigateUp(): Boolean {

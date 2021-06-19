@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -44,11 +45,10 @@
         android:id="@+id/viewDisableLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:alpha="0.0"
         android:background="?attr/colorPrimaryVariant"
-        android:alpha="0.10"
-        android:clickable="true"
-        android:focusable="true"
-        android:visibility="gone"/>
+        android:clickable="false"
+        android:focusable="true" />
 
     <RelativeLayout
         android:id="@+id/setting_theme"
@@ -56,6 +56,8 @@
         android:layout_height="@dimen/_180sdp"
         android:background="@color/white"
         android:translationY="-490dp"
+        tool:translationY="0dp"
+        tool:background="@color/primaryLightColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
@@ -63,114 +65,103 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/select_color_theme"
-            android:fontFamily="cursive"
-            android:textColor="?attr/colorPrimaryVariant"
-            android:textSize="@dimen/_25sdp"
-            android:textStyle="bold"
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_8sdp"
-            />
+            android:fontFamily="cursive"
+            android:text="@string/select_color_theme"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:textSize="@dimen/_25sdp"
+            android:textStyle="bold" />
 
         <View
             android:id="@+id/red_theme"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/md_red_dark"
-            android:layout_marginTop="@dimen/_50sdp"
             android:layout_marginStart="@dimen/_5sdp"
-            />
+            android:layout_marginTop="@dimen/_50sdp"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/md_red_dark" />
 
         <View
             android:id="@+id/gray_theme"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/md_gray_light"
-            android:layout_marginTop="@dimen/_110sdp"
             android:layout_marginStart="@dimen/_5sdp"
-            />
+            android:layout_marginTop="@dimen/_110sdp"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/md_gray_light" />
 
         <View
             android:id="@+id/lime_theme"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/md_lime_light"
-            android:layout_marginTop="@dimen/_50sdp"
             android:layout_marginStart="@dimen/_65sdp"
-            />
+            android:layout_marginTop="@dimen/_50sdp"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/md_lime_light" />
 
         <View
             android:id="@+id/pink_theme"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/md_pink_dark"
-            android:layout_marginTop="@dimen/_110sdp"
             android:layout_marginStart="@dimen/_65sdp"
-            />
+            android:layout_marginTop="@dimen/_110sdp"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/md_pink_dark" />
 
         <View
             android:id="@+id/lightBlue_theme"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/md_lightBlue_dark"
-            android:layout_marginTop="@dimen/_110sdp"
             android:layout_marginStart="@dimen/_125sdp"
-            />
+            android:layout_marginTop="@dimen/_110sdp"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/md_lightBlue_dark" />
 
         <View
             android:id="@+id/orange_theme"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/primaryDarkColor"
-            android:layout_marginTop="@dimen/_50sdp"
             android:layout_marginStart="@dimen/_125sdp"
-            />
+            android:layout_marginTop="@dimen/_50sdp"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/primaryDarkColor" />
 
         <View
             android:id="@+id/deepOrange_theme"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/md_deepOrange_dark"
-            android:layout_marginTop="@dimen/_50sdp"
             android:layout_marginStart="@dimen/_185sdp"
-            />
+            android:layout_marginTop="@dimen/_50sdp"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/md_deepOrange_dark" />
 
         <View
             android:id="@+id/deepPink_theme"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/md_deepPink_dark"
-            android:layout_marginTop="@dimen/_50sdp"
             android:layout_marginStart="@dimen/_245sdp"
-            />
+            android:layout_marginTop="@dimen/_50sdp"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/md_deepPink_dark" />
 
         <View
             android:id="@+id/teal_theme"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/md_teal_dark"
-            android:layout_marginTop="@dimen/_110sdp"
             android:layout_marginStart="@dimen/_185sdp"
-            />
+            android:layout_marginTop="@dimen/_110sdp"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/md_teal_dark" />
 
         <View
             android:id="@+id/brown_theme"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/md_brown_dark"
-            android:layout_marginTop="@dimen/_110sdp"
             android:layout_marginStart="@dimen/_245sdp"
-            />
+            android:layout_marginTop="@dimen/_110sdp"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/md_brown_dark" />
 
     </RelativeLayout>
 
@@ -184,8 +175,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:titleTextColor="?attr/colorPrimaryVariant"
-        />
+        app:titleTextColor="?attr/colorPrimaryVariant" />
 
     <View
         android:id="@+id/toolbar_divider_line"
