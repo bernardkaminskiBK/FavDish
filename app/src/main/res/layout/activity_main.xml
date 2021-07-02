@@ -19,18 +19,6 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:navGraph="@navigation/mobile_navigation" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
-        android:background="?android:attr/windowBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nav_host_fragment"
-        app:menu="@menu/bottom_nav_menu" />
 
     <View
         android:id="@+id/toolbar_divider_line_nav_view"
@@ -50,17 +38,31 @@
         android:clickable="false"
         android:focusable="true" />
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nav_host_fragment"
+        app:menu="@menu/bottom_nav_menu" />
+
+
     <RelativeLayout
         android:id="@+id/setting_theme"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_180sdp"
         android:background="@color/white"
         android:translationY="-490dp"
-        tool:translationY="0dp"
-        tool:background="@color/primaryLightColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tool:background="@color/primaryLightColor"
+        tool:translationY="0dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -73,95 +75,101 @@
             android:textSize="@dimen/_25sdp"
             android:textStyle="bold" />
 
-        <View
-            android:id="@+id/red_theme"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_50sdp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/md_red_dark" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_50sdp">
 
-        <View
-            android:id="@+id/gray_theme"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_110sdp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/md_gray_light" />
+            <View
+                android:id="@+id/red_theme"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:background="@drawable/rounded_background"
+                android:backgroundTint="@color/md_red_dark" />
 
-        <View
-            android:id="@+id/lime_theme"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginStart="@dimen/_65sdp"
-            android:layout_marginTop="@dimen/_50sdp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/md_lime_light" />
+            <View
+                android:id="@+id/gray_theme"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:background="@drawable/rounded_background"
+                android:backgroundTint="@color/md_gray_light" />
 
-        <View
-            android:id="@+id/pink_theme"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginStart="@dimen/_65sdp"
-            android:layout_marginTop="@dimen/_110sdp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/md_pink_dark" />
+            <View
+                android:id="@+id/lime_theme"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:background="@drawable/rounded_background"
+                android:backgroundTint="@color/md_lime_light" />
 
-        <View
-            android:id="@+id/lightBlue_theme"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginStart="@dimen/_125sdp"
-            android:layout_marginTop="@dimen/_110sdp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/md_lightBlue_dark" />
+            <View
+                android:id="@+id/pink_theme"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:background="@drawable/rounded_background"
+                android:backgroundTint="@color/md_pink_dark" />
 
-        <View
-            android:id="@+id/orange_theme"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginStart="@dimen/_125sdp"
-            android:layout_marginTop="@dimen/_50sdp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/primaryDarkColor" />
+            <View
+                android:id="@+id/lightBlue_theme"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:background="@drawable/rounded_background"
+                android:backgroundTint="@color/md_lightBlue_dark" />
+        </LinearLayout>
 
-        <View
-            android:id="@+id/deepOrange_theme"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginStart="@dimen/_185sdp"
-            android:layout_marginTop="@dimen/_50sdp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/md_deepOrange_dark" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_110sdp">
 
-        <View
-            android:id="@+id/deepPink_theme"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginStart="@dimen/_245sdp"
-            android:layout_marginTop="@dimen/_50sdp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/md_deepPink_dark" />
+            <View
+                android:id="@+id/orange_theme"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:background="@drawable/rounded_background"
+                android:backgroundTint="@color/primaryDarkColor" />
 
-        <View
-            android:id="@+id/teal_theme"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginStart="@dimen/_185sdp"
-            android:layout_marginTop="@dimen/_110sdp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/md_teal_dark" />
+            <View
+                android:id="@+id/deepOrange_theme"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:background="@drawable/rounded_background"
+                android:backgroundTint="@color/md_deepOrange_dark" />
 
-        <View
-            android:id="@+id/brown_theme"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginStart="@dimen/_245sdp"
-            android:layout_marginTop="@dimen/_110sdp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/md_brown_dark" />
+            <View
+                android:id="@+id/deepPink_theme"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:background="@drawable/rounded_background"
+                android:backgroundTint="@color/md_deepPink_dark" />
+
+            <View
+                android:id="@+id/teal_theme"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:background="@drawable/rounded_background"
+                android:backgroundTint="@color/md_teal_dark" />
+
+            <View
+                android:id="@+id/brown_theme"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:background="@drawable/rounded_background"
+                android:backgroundTint="@color/md_brown_dark" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 
